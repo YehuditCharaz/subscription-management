@@ -1,12 +1,13 @@
 from project.send_email import build_email_message
 import os
 import sys
-import base64
+# import base64
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-import project.download_excel
-from unittest import mock
-from unittest.mock import Mock, patch
+# import project.download_excel
+# from unittest import mock
+# from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 
 def test_build_email_message():
