@@ -1,6 +1,9 @@
 import requests
-from project.body_email import *
-from project.subscription_activity import *
+from project.body_email import build_email_body, build_email_body_to_excel
+from project.subscription_activity import (
+    is_lower_than_the_set_price,
+    check_subscription_activity,
+)
 from project.upload_to_emails import upload_to_emails
 from project.upload_to_subs_to_delete import upload_subscriptions_to_delete
 from project.sub_manager_email import get_email_manager_by_sub_name
@@ -20,7 +23,7 @@ def func_subscriptions_automation(req: func.HttpRequest) -> func.HttpResponse:
     subscription_id = req_body["subscription_id"]
     activity = check_subscription_activity(subscription_id)
     low_price = is_lower_than_the_set_price(subscription_id)
-    if activity == False or low_price == True:
+    if activity is False or low_price is True:
         body = build_email_body(subscription_name, subscription_id, activity, low_price)
         recipient_email = get_email_manager_by_sub_name(subscription_name)
         if not recipient_email.__contains__("@"):
