@@ -10,11 +10,14 @@ credentials = DefaultAzureCredential()
 
 
 def get_subscriptions():
-    subscription_client = SubscriptionClient(credentials)
-    subscriptions = list(subscription_client.subscriptions.list())
-    tagged_subscriptions = []
-    for subscription in subscriptions:
-        tags = subscription.tags
-        if tags and config.config_variables.tag_name not in tags.keys():
-            tagged_subscriptions.append(subscription)
-    return tagged_subscriptions
+    try:
+        subscription_client = SubscriptionClient(credentials)
+        subscriptions = list(subscription_client.subscriptions.list())
+        tagged_subscriptions = []
+        for subscription in subscriptions:
+            tags = subscription.tags
+            if tags and config.config_variables.tag_name not in tags.keys():
+                tagged_subscriptions.append(subscription)
+        return tagged_subscriptions
+    except Exception as ex:
+        return str(ex)
