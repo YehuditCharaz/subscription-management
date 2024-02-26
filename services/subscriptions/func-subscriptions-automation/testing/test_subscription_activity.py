@@ -1,6 +1,11 @@
-from project.subscription_activity import check_subscription_activity,get_start_date,is_lower_than_the_set_price
+from project.subscription_activity import (
+    check_subscription_activity,
+    get_start_date,
+    is_lower_than_the_set_price,
+)
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
+
 # import config.config_variables
 import project.subscription_activity
 from unittest import mock

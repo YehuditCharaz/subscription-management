@@ -3,6 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from project.body_email import build_email_body
+
 # import config.config_variables
 from unittest import mock
 

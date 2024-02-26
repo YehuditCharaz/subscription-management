@@ -1,5 +1,8 @@
 from unittest.mock import patch, Mock
-from project.sub_manager_email import get_email_manager_by_sub_name,get_subscriptions_managers
+from project.sub_manager_email import (
+    get_email_manager_by_sub_name,
+    get_subscriptions_managers,
+)
 # import project.get_connection_string
 
 

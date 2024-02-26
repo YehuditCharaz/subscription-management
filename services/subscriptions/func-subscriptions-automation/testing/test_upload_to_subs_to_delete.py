@@ -1,6 +1,9 @@
-from datetime import datetime
+# from datetime import datetime
 from unittest.mock import patch
-from project.upload_to_subs_to_delete import *
+from project.upload_to_subs_to_delete import (
+    upload_subscriptions_to_delete,
+    build_sub_object,
+)
 import pytest
 
 
@@ -60,4 +63,4 @@ def test_build_sub_object_with_none_values():
 )
 @patch("project.upload_to_subs_to_delete.upload_to_table")
 def test_upload_deleted_subscriptions(build_email_object, upload_to_table):
-    assert upload_subscriptions_to_delete("id", "name", False, False) == None
+    assert upload_subscriptions_to_delete("id", "name", False, False) is None

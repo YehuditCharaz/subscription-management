@@ -16,13 +16,16 @@ def download_blob(container_name, blob_name):
         connection_string = (
             project.get_connection_string.get_connection_string_from_keyvault(secret)
         )
-        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+        blob_service_client = BlobServiceClient.from_connection_string(
+            connection_string
+        )
         container_client = blob_service_client.get_container_client(container_name)
         blob_client = container_client.get_blob_client(blob_name)
         blob_data = blob_client.download_blob().readall()
         return blob_data
     except Exception as ex:
         return str(ex)
+
 
 def write_to_excel(subscription_obj):
     try:
@@ -48,7 +51,9 @@ def write_to_excel(subscription_obj):
         sheet[column_body] = subscription_obj["body"]
         workbook.save(file_stream)
         file_stream.seek(0)
-        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+        blob_service_client = BlobServiceClient.from_connection_string(
+            connection_string
+        )
         blob_client = blob_service_client.get_blob_client(
             container=container_name, blob=blob_name
         )

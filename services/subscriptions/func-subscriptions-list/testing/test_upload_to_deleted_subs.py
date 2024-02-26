@@ -1,7 +1,13 @@
 from datetime import datetime
 from unittest.mock import patch, Mock
-from project.upload_to_deleted_subs import *
-import project.get_connection_string
+from project.upload_to_deleted_subs import (
+    build_sub_object,
+    upload_deleted_subscriptions,
+    get_subscriptions_to_delete,
+)
+
+# import project.get_connection_string
+from pytz import timezone
 
 
 def test_build_sub_object():
@@ -75,4 +81,4 @@ subs_to_delete = [sub()]
 def test_upload_deleted_subscriptions(
     get_subscriptions_to_delete, build_sub_object, upload_to_table
 ):
-    assert upload_deleted_subscriptions(subs_to_delete) == None
+    assert upload_deleted_subscriptions(subs_to_delete) is None

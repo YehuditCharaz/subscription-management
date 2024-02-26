@@ -1,8 +1,9 @@
 import azure.functions as func
 import requests
-from project.get_subscriptions import *
+from project.get_subscriptions import get_subscriptions
 from project.upload_to_deleted_subs import upload_deleted_subscriptions
-from project.excel_blob import *
+from project.excel_blob import get_last_row, create_excel_blob
+import config.config_variables
 
 app = func.FunctionApp()
 

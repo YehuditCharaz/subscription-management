@@ -1,6 +1,7 @@
 from datetime import datetime
 from unittest.mock import patch
-from project.upload_to_emails import *
+from project.upload_to_emails import upload_to_emails, build_email_object
+from pytz import timezone
 
 
 def test_build_email_object():
@@ -20,4 +21,4 @@ def test_build_email_object():
 )
 @patch("project.upload_to_emails.upload_to_table")
 def test_upload_deleted_subscriptions(build_email_object, upload_to_table):
-    assert upload_to_emails("aaa@gmail.com", False, False) == None
+    assert upload_to_emails("aaa@gmail.com", False, False) is None
