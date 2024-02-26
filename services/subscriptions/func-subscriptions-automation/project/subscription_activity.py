@@ -24,7 +24,7 @@ def check_subscription_activity(subscription_id):
             return True
         else:
             return False
-    except ValueError:
+    except Exception:
         return "The start time cannot be more than 90 days in the past."
 
 
