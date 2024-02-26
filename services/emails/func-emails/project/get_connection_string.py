@@ -14,6 +14,7 @@ def get_connection_string_from_keyvault(secret_name):
     except Exception as ex:
         return str(ex)
 
+
 def get_access_token(client_id, client_secret, tenant_id):
     try:
         authority = f"https://login.microsoftonline.com/{tenant_id}"

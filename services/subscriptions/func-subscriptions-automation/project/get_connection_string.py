@@ -11,7 +11,9 @@ credentials = DefaultAzureCredential()
 
 def get_connection_string_from_keyvault():
     try:
-        client = SecretClient(config.config_variables.keyvault_uri, credential=credentials)
+        client = SecretClient(
+            config.config_variables.keyvault_uri, credential=credentials
+        )
         keyVaultNameValue = client.get_secret(config.config_variables.secret_name)
         return keyVaultNameValue.value
     except Exception as ex:

@@ -19,6 +19,7 @@ def build_email_body(sub_name, sub_id, sub_activity, cost):
     except Exception as ex:
         return str(ex)
 
+
 def build_email_body_to_excel(sub_activity, cost):
     try:
         body = ""
