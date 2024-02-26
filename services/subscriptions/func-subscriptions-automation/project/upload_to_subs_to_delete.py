@@ -18,7 +18,7 @@ def upload_subscriptions_to_delete(
             subscription_id, subscription_name, is_activity, is_high_cost
         )
         upload_to_table(table_name, sub)
-    except:
+    except Exception:
         return "Error occured in the upload process"
 
 
@@ -32,11 +32,11 @@ def build_sub_object(subscription_id, subscription_name, is_activity, is_high_co
         or is_high_cost is None
     ):
         raise ValueError("The values cannot be None")
-    if is_activity == False:
+    if is_activity is False:
         delete_reason = "not activity"
-    if is_high_cost == True:
+    if is_high_cost is True:
         delete_reason = "too cheap"
-    if is_activity == False and is_high_cost == True:
+    if is_activity is False and is_high_cost is True:
         delete_reason = "not activity and too cheap"
     try:
         return {

@@ -24,7 +24,7 @@ def check_subscription_activity(subscription_id):
             return True
         else:
             return False
-    except:
+    except ValueError:
         return "The start time cannot be more than 90 days in the past."
 
 
@@ -34,7 +34,7 @@ def get_start_date():
         current_date = datetime.now().date()
         start_date = current_date - relativedelta(months=int(num_of_months))
         return start_date, current_date
-    except:
+    except Exception:
         return "An error occurred in the calculation"
 
 
@@ -47,5 +47,5 @@ def is_lower_than_the_set_price(subscription_id):
         )
         total_cost = sum(result.cost for result in results)
         return total_cost < float(cost)
-    except:
+    except Exception:
         return "An error occurred in the process"

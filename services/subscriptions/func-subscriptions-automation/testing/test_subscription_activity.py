@@ -1,7 +1,7 @@
-from project.subscription_activity import *
+from project.subscription_activity import check_subscription_activity,get_start_date,is_lower_than_the_set_price
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
-import config.config_variables
+# import config.config_variables
 import project.subscription_activity
 from unittest import mock
 from unittest.mock import Mock, patch
@@ -55,7 +55,7 @@ def test_mock_check_subscription_activity():
     mock_config.num_of_months = "1"
     with mock.patch("config.config_variables", mock_config):
         result = check_subscription_activity(mock_subscription_id)
-        assert result == True
+        assert result is True
 
 
 @patch(
@@ -69,7 +69,7 @@ def test_mock_check_subscription_activity_with_False():
     mock_config.num_of_months = "10"
     with mock.patch("config.config_variables", mock_config):
         result = check_subscription_activity(mock_subscription_id)
-        assert result == False
+        assert result is False
 
 
 @patch(
@@ -92,7 +92,7 @@ def test_when_the_total_cost_is_higher_than_the_price(mocker):
     mock_config.cost = 150
     with mock.patch("config.config_variables", mock_config):
         result = is_lower_than_the_set_price(subscription_id)
-        assert result == False
+        assert result is False
 
 
 def test_when_the_total_cost_is_lower_than_the_price(mocker):
@@ -102,4 +102,4 @@ def test_when_the_total_cost_is_lower_than_the_price(mocker):
     mock_config.cost = 150
     with mock.patch("config.config_variables", mock_config):
         result = is_lower_than_the_set_price(subscription_id)
-        assert result == True
+        assert result is True

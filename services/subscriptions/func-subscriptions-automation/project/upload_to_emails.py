@@ -14,18 +14,18 @@ def upload_to_emails(recipient_email, is_activity, is_high_cost):
     try:
         entity = build_email_object(recipient_email, is_activity, is_high_cost)
         upload_to_table(table_name, entity)
-    except:
+    except Exception:
         return "Error occured in the upload process"
 
 
 def build_email_object(recipient_email, is_activity, is_high_cost):
     date = datetime.now(tz=timezone("Asia/Jerusalem"))
     delete_reason = ""
-    if is_activity == False:
+    if is_activity is False:
         delete_reason = "not activity"
-    if is_high_cost == True:
+    if is_high_cost is True:
         delete_reason = "too cheap"
-    if is_activity == False and is_high_cost == True:
+    if is_activity is False and is_high_cost is True:
         delete_reason = "not activity and expensive"
     try:
         return {

@@ -32,7 +32,7 @@ def get_email_manager_by_sub_name(subName):
         for manager in managers:
             if manager["subName"] == subName:
                 sub = manager
-        if sub != None:
+        if sub is not None:
             return sub["subManagerMail"]
         return "subscription name is not exist"
     except Exception as ex:
