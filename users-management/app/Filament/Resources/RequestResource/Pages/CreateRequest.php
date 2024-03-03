@@ -14,10 +14,6 @@ class CreateRequest extends CreateRecord
     {
         $username = UserResource::getUserFromAzure()->name;
 
-
-
-
-        
         $data['submit_username'] = $username;
         $data['status'] = 'new';
 
