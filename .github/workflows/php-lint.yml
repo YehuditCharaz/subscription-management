@@ -23,10 +23,17 @@ jobs:
       - name: ⏬ Install dependencies
         run: |
           composer install -n --prefer-dist
-          # pip install ruff
+          composer require laravel/pint --dev
 
-      # - name: 💄 Run Ruff
-      #   run: |
-      #     ruff check --output-format=github .
-      #     ruff format --check .
-          
+      - name: 💄 Run Pint
+        run: |
+          ./vendor/bin/pint --test
+
+
+  # ./vendor/bin/pint
+
+
+
+
+
+

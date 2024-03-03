@@ -24,11 +24,11 @@ return new class extends Migration
         });
 
         \App\Models\User::create([
-            'name' => env('DB_USER_DEFAULT_NAME', "user_name"),
-            'phone' => env('DB_USER_DEFAULT_PHONE',  "user_phone"),
-            'role' => env('DB_USER_DEFAULT_ROLE',  "user_role"),
-            'email' => env('DB_USER_DEFAULT_EMAIL', "user_email"),
-            'password' => bcrypt(env('DB_USER_DEFAULT_PASSWORD',  "user_password")),
+            'name' => env('DB_USER_DEFAULT_NAME', 'user_name'),
+            'phone' => env('DB_USER_DEFAULT_PHONE', 'user_phone'),
+            'role' => env('DB_USER_DEFAULT_ROLE', 'user_role'),
+            'email' => env('DB_USER_DEFAULT_EMAIL', 'user_email'),
+            'password' => bcrypt(env('DB_USER_DEFAULT_PASSWORD', 'user_password')),
         ]);
     }
 

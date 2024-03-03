@@ -3,24 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\Layout\Split;
-use Filament\Tables\Columns\Layout\Grid;
-use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\Layout\Panel;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Validation\Rule;
-use Livewire\Component;
-use Filament\Tables\Actions\Action;
-
 
 class UserResource extends Resource
 {
@@ -31,7 +20,8 @@ class UserResource extends Resource
     public static function shouldRegisterNavigation(): bool
     {
         $user = self::getUserFromAzure();
-        return $user->role === "Admin";
+
+        return $user->role === 'Admin';
     }
 
     public static function getUserFromAzure()
@@ -67,22 +57,22 @@ class UserResource extends Resource
                     ->label(__('password'))
                     ->password()
                     ->required(),
-                    ]);
+            ]);
     }
-    
+
     public static function table(Table $table): Table
     {
         $viewType = request()->input('viewType', 'Table');
 
-        if ($viewType === 'Card'){
+        if ($viewType === 'Card') {
             $table = $table->contentGrid(['md' => 2, 'xl' => 3])->columns(
                 array_merge(self::commonColumns(), [Split::make([])])
             );
-        }
-        else{
+        } else {
             $table = $table->striped()->columns(self::commonColumns());
         }
-        return $table     
+
+        return $table
             ->filters([
             ])
             ->actions([
@@ -90,7 +80,7 @@ class UserResource extends Resource
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
                 // ]),
             ]);
     }
@@ -116,7 +106,7 @@ class UserResource extends Resource
                 ->copyMessageDuration(1500)
                 ->searchable(),
         ];
-    }    
+    }
 
     public static function getRelations(): array
     {
@@ -140,6 +130,6 @@ class UserResource extends Resource
 
     public static function getPluralModelLabel(): string
     {
-        return __('users');         
+        return __('users');
     }
 }

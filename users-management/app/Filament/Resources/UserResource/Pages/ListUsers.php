@@ -4,8 +4,8 @@ namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
 use Filament\Actions\Action;
+use Filament\Resources\Pages\ListRecords;
 
 class ListUsers extends ListRecords
 {
@@ -14,7 +14,7 @@ class ListUsers extends ListRecords
     public function mount(): void
     {
         $user = UserResource::getUserFromAzure();
-        abort_unless($user->role === "Admin", 401);
+        abort_unless($user->role === 'Admin', 401);
     }
 
     public function getHeaderActions(): array
@@ -23,7 +23,7 @@ class ListUsers extends ListRecords
             // Actions\CreateAction::make(),
             Action::make('switchView')
                 ->label(__('change view'))
-                ->url(fn () =>request()->input('viewType', 'Table') === 'Table' ?  url()->current() . '?viewType=Card': url()->current() . '?viewType=Table')
+                ->url(fn () => request()->input('viewType', 'Table') === 'Table' ? url()->current().'?viewType=Card' : url()->current().'?viewType=Table'),
         ];
     }
 }

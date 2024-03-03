@@ -2,32 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Models\Request;
 use App\Filament\Resources\RequestResource\Pages;
-use App\Filament\Resources\RequestResource\RelationManagers;
+use App\Models\Request;
+use Closure;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Fieldset;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\Section;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Grouping\Group;
 use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Columns\Layout\Split;
-use Filament\Tables\Columns\Layout\Grid;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
-use Closure;
-
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class RequestResource extends Resource
 {
@@ -44,7 +35,7 @@ class RequestResource extends Resource
     {
         return __('requests');
     }
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -59,19 +50,19 @@ class RequestResource extends Resource
                         function () {
                             return function (string $attribute, $value, Closure $fail) {
                                 $id = str_pad($value, 9, '0', STR_PAD_LEFT);
-                                if (!preg_match('/^[0-9]{9}$/', $id)) 
+                                if (! preg_match('/^[0-9]{9}$/', $id)) {
                                     return false;
+                                }
                                 $sum = 0;
                                 for ($i = 0; $i < 9; $i++) {
-                                    $digit = (int)$id[$i];
+                                    $digit = (int) $id[$i];
                                     $sum += ($i % 2 === 0) ? $digit : array_sum(str_split($digit * 2));
                                 }
-                                if ($sum % 10 > 0)
-                                {
+                                if ($sum % 10 > 0) {
                                     $fail(__('The :attribute is invalid.'));
                                 }
                             };
-                        }
+                        },
                     ])
                     ->required()
                     ->maxLength(9)
@@ -115,7 +106,7 @@ class RequestResource extends Resource
                     ->label(__('authentication type'))
                     ->options([
                         'Microsoft auth' => __('Microsoft auth'),
-                        'phone call' => __('phone call')
+                        'phone call' => __('phone call'),
                     ])
                     ->required(),
                 Select::make('service_type')
@@ -132,7 +123,7 @@ class RequestResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(365)
-                    ->maxLength(5),  
+                    ->maxLength(5),
                 Textarea::make('description')
                     ->label(__('description'))
                     ->required()
@@ -149,13 +140,13 @@ class RequestResource extends Resource
             $table = $table->contentGrid(['md' => 2, 'xl' => 3])->columns(
                 array_merge(self::commonColumns(), [Split::make([])])
             );
-        }
-        else{
+        } else {
             $table = $table->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes())
-            ->striped()
-            ->columns(self::commonColumns());
+                ->striped()
+                ->columns(self::commonColumns());
         }
-        return $table   
+
+        return $table
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('status')
@@ -187,27 +178,28 @@ class RequestResource extends Resource
                     }),
             ])
             ->actions([
-                    ActionGroup::make([
-                        Tables\Actions\ViewAction::make(),
-                        Tables\Actions\EditAction::make(),
-                        Tables\Actions\Action::make(__('approval'))
-                            ->action(fn (Request $record) => self::approval($record))
-                            ->icon('fluentui-approvals-app-16-o')
-                            ->visible(UserResource::getUserFromAzure()->role==="Admin")
-                            ->color('success'),
-                        Tables\Actions\Action::make(__('deny'))
-                            ->action(fn (Request $record) => self::deny($record))
-                            ->icon('heroicon-o-x-circle')
-                            ->visible(UserResource::getUserFromAzure()->role==="Admin")
-                            ->color('danger'),
-                        Tables\Actions\DeleteAction::make(),
-                    ])->tooltip('Actions')
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make(__('approval'))
+                        ->action(fn (Request $record) => self::approval($record))
+                        ->icon('fluentui-approvals-app-16-o')
+                        ->visible(UserResource::getUserFromAzure()->role === 'Admin')
+                        ->color('success'),
+                    Tables\Actions\Action::make(__('deny'))
+                        ->action(fn (Request $record) => self::deny($record))
+                        ->icon('heroicon-o-x-circle')
+                        ->visible(UserResource::getUserFromAzure()->role === 'Admin')
+                        ->color('danger'),
+                    Tables\Actions\DeleteAction::make(),
+                ])->tooltip('Actions'),
             ])
             ->query(function (Request $query) {
-                if(UserResource::getUserFromAzure()->role === "User"){
+                if (UserResource::getUserFromAzure()->role === 'User') {
                     return $query
                         ->where('submit_username', UserResource::getUserFromAzure()->name);
                 }
+
                 return $query;
             })
             ->bulkActions([
@@ -250,7 +242,7 @@ class RequestResource extends Resource
                 ->label(__('phone'))
                 ->searchable(),
             TextColumn::make('email')
-                ->label(__('email'))                    
+                ->label(__('email'))
                 ->copyable()
                 ->copyMessage(__('Email address copied'))
                 ->copyMessageDuration(1500)

@@ -3,9 +3,8 @@
 namespace App\Filament\Resources\RequestResource\Pages;
 
 use App\Filament\Resources\RequestResource;
-use Filament\Actions;
-use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\UserResource;
+use Filament\Resources\Pages\CreateRecord;
 
 class CreateRequest extends CreateRecord
 {
@@ -16,6 +15,7 @@ class CreateRequest extends CreateRecord
         $username = UserResource::getUserFromAzure()->name;
         $data['submit_username'] = $username;
         $data['status'] = 'new';
+
         return $data;
     }
 

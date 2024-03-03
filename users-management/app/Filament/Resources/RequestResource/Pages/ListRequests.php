@@ -3,10 +3,9 @@
 namespace App\Filament\Resources\RequestResource\Pages;
 
 use App\Filament\Resources\RequestResource;
-use App\Filament\Resources\UserResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
 use Filament\Actions\Action;
+use Filament\Resources\Pages\ListRecords;
 
 class ListRequests extends ListRecords
 {
@@ -18,8 +17,8 @@ class ListRequests extends ListRecords
             Actions\CreateAction::make(),
             Action::make('switchView')
                 ->label(__('change view'))
-                ->url(fn () =>request()->input('viewType', 'Table') === 'Table' ?  url()->current() . '?viewType=Card': url()->current() . '?viewType=Table')
-                ->visible(auth()->user()->role === 'Admin')
+                ->url(fn () => request()->input('viewType', 'Table') === 'Table' ? url()->current().'?viewType=Card' : url()->current().'?viewType=Table')
+                ->visible(auth()->user()->role === 'Admin'),
         ];
     }
 }

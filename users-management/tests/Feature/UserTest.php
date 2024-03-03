@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use PHPUnit\Framework\TestCase;
-use App\Models\User; 
 
 class UserTest extends TestCase
 {
@@ -23,10 +23,10 @@ class UserTest extends TestCase
         $this->assertSame($expected, $user->getHidden());
     }
 
-    public function test_casts_attributes() 
+    public function test_casts_attributes()
     {
         $user = new User();
-        $expected = ['id' => 'int','email_verified_at' => 'datetime', 'password' => 'hashed'];
+        $expected = ['id' => 'int', 'email_verified_at' => 'datetime', 'password' => 'hashed'];
 
         $this->assertSame($expected, $user->getCasts());
     }
